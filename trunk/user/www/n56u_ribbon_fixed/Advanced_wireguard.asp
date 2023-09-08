@@ -187,10 +187,18 @@ function done_validating(action){
 				</td>
 
 										</tr>
+
 										<tr>
 										<th>对端ip:端口（格式 223.5.6.6:4900)</th>
 				<td>
 					<input type="text" class="input" name="wireguard_peerip" id="wireguard_peerip" style="width: 200px" value="<% nvram_get_x("","wireguard_peerip"); %>" />
+				</td>
+
+										</tr>
+<tr>
+										<th>预共享秘钥key </th>
+				<td>
+					<input type="text" class="input" name="wireguard_presharedkey" id="wireguard_presharedkey" style="width: 200px" value="<% nvram_get_x("","wireguard_presharedkey"); %>" />
 				</td>
 
 										</tr>
