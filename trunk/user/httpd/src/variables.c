@@ -1020,7 +1020,7 @@
 			{"wireguard_peerkey", "", NULL, EVM_RESTART_WIREGUARD},
 			{"wireguard_peerip", "", NULL, EVM_RESTART_WIREGUARD},
 			{"wireguard_presharedkey", "", NULL, EVM_RESTART_WIREGUARD},
-			{"wireguard_localip", "", NULL, EVM_RESTART_WIREGUARD},
+			{"wireguard_allowedips", "", NULL, EVM_RESTART_WIREGUARD},
 			{0,0,0,0}
 		};
 #endif
