@@ -804,6 +804,7 @@ struct nvram_pair router_defaults[] = {
 	{ "wireguard_peerip", "" },
 	{ "wireguard_peerkey", "" },
 	{ "wireguard_presharedkey", "" },
+	{ "wireguard_allowedips", "" },
 #endif
 
 #if defined(APP_SQM)
