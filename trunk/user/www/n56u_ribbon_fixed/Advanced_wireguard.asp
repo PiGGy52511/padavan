@@ -202,6 +202,14 @@ function done_validating(action){
 				</td>
 
 										</tr>
+										</tr>
+<tr>
+										<th>允许的ip </th>
+				<td>
+					<input type="text" class="input" name="wireguard_allowedips" id="wireguard_allowedips" style="width: 200px" value="<% nvram_get_x("","wireguard_allowedips"); %>" />
+				</td>
+
+										</tr>
 										<tr>
 											<td colspan="4" style="border-top: 0 none;">
 												<br />
