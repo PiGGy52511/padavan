@@ -5,6 +5,7 @@ start_wg() {
 	privatekey="$(nvram get wireguard_localkey)"
 	peerkey="$(nvram get wireguard_peerkey)"
 	peerip="$(nvram get wireguard_peerip)"
+ 	presharedkey="$(nvram get wireguard_presharedkey)"
 	logger -t "WIREGUARD" "正在启动wireguard"
 	ifconfig wg0 down
 	ip link del dev wg0
@@ -12,9 +13,13 @@ start_wg() {
 	ip link set dev wg0 mtu 1420
 	ip addr add $localip dev wg0
 	echo "$privatekey" > /tmp/privatekey
+ 	echo "$privatekey" > /tmp/presharedkey
 	wg set wg0 private-key /tmp/privatekey
+ 	wg set wg0 preshared-key /tmp/presharedkey
 	wg set wg0 peer $peerkey persistent-keepalive 25 allowed-ips 0.0.0.0/0 endpoint $peerip
 	iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE
+	iptables -A FORWARD -i wg0 -j ACCEPT
+	iptables -A FORWARD -o wg0 -j ACCEPT
 	ifconfig wg0 up
 }
 
