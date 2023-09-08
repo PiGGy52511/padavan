@@ -6,6 +6,7 @@ start_wg() {
 	peerkey="$(nvram get wireguard_peerkey)"
 	peerip="$(nvram get wireguard_peerip)"
  	presharedkey="$(nvram get wireguard_presharedkey)"
+  	allowedips="$(nvram get wireguard_allowedips)"
 	logger -t "WIREGUARD" "正在启动wireguard"
 	ifconfig wg0 down
 	ip link del dev wg0
