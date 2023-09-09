@@ -8,7 +8,7 @@ start_wg() {
  	presharedkey="$(nvram get wireguard_presharedkey)"
   	allowedips="$(nvram get wireguard_allowedips)"
 	logger -t "WIREGUARD" "正在启动wireguard"
-	cp /etc/storage/wg0.conf /tmp/wg0.conf
+	cp /etc_ro/wg0.conf /tmp/wg0.conf
  	sed -i "s/WG_PRIVATEKEY/$privatekey/g" /tmp/wg0.conf
  	sed -i "s/localip/$localip/g" /tmp/wg0.conf
    	sed -i "s/WG_PUBLICKEY/$peerkey/g" /tmp/wg0.conf
