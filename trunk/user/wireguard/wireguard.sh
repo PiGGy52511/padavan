@@ -10,7 +10,7 @@ start_wg() {
 	logger -t "WIREGUARD" "正在启动wireguard"
 	cp /etc_ro/wg0.conf /tmp/wg0.conf
  	sed -i "s/WG_PRIVATEKEY/$privatekey/g" /tmp/wg0.conf
- 	sed -i "s/localip/$localip/g" /tmp/wg0.conf
+ 	sed -i "s/WG_ADDRESS/$localip/g" /tmp/wg0.conf
    	sed -i "s/WG_PUBLICKEY/$peerkey/g" /tmp/wg0.conf
      	sed -i "s/WG_ENDPOINT/$peerip/g" /tmp/wg0.conf
        	sed -i "s/WG_PRESHAREDKEY/$presharedkey/g" /tmp/wg0.conf
