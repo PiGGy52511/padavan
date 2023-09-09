@@ -8,7 +8,7 @@ start_wg() {
  	presharedkey="$(nvram get wireguard_presharedkey)"
   	allowedips="$(nvram get wireguard_allowedips)"
 	logger -t "WIREGUARD" "正在启动wireguard"
-	cp /etc_ro/wg0.conf /tmp/wg0.conf
+	cp -f /etc_ro/wg0.conf /tmp/wg0.conf
  	sed -i "s/WG_PRIVATEKEY/$privatekey/g" /tmp/wg0.conf
  	sed -i "s/WG_ADDRESS/$localip/g" /tmp/wg0.conf
    	sed -i "s/WG_PUBLICKEY/$peerkey/g" /tmp/wg0.conf
@@ -25,6 +25,7 @@ start_wg() {
 stop_wg() {
 	logger -t "WIREGUARD" "正在关闭wireguard"
  	wg-quick down /tmp/wg0.conf wg0
+  	rm -rf /tmp/wg0.conf
 	iptables -t nat -D POSTROUTING -o wg0 -j MASQUERADE
 	iptables -D FORWARD -i wg0 -j ACCEPT
 	iptables -D FORWARD -o wg0 -j ACCEPT 
