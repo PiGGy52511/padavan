@@ -11,4 +11,4 @@ clean:
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/wireguard.sh /usr/bin/wireguard.sh
-	$(ROMFSINST) -p $(THISDIR)/wg0.conf /etc/storage/wg0.conf
+	$(ROMFSINST) /etc_ro/wg0.conf
