@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Setup:
+  Build:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -12,7 +12,10 @@ jobs:
         toolchain: [mipsel-linux-musl]
     steps:
       - uses: actions/checkout@main
+        name: Checkout
+        
       - uses: hendrikmuhs/ccache-action@main
+        name: Cache
         with:
           key: ${{ matrix.target }}-${{ matrix.toolchain }}
           
@@ -28,9 +31,9 @@ jobs:
             image=$(ls trunk/images/*.trx)
             mv $image $(echo $image | sed 's/K2P/K2P-NANO/')
           fi
-          
+                    
       - name: Release
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{ env.TAG_NAME }} # 指定标签名，会自动创建此标签
-          files: trunk/images/*.trx # 直接指定要发布的构件路径
+          tag_name: $(date +%Y%m%d)
+          files: trunk/images/*.trx
