@@ -21,6 +21,7 @@ jobs:
           
       - name: Setup
         run: |
+          echo "TAG_NAME=$(date +%Y%m%d)" >> $GITHUB_ENV
           sudo apt update
           sudo apt install libtool-bin gperf python3-docutils autopoint gettext ccache
           
@@ -31,9 +32,13 @@ jobs:
             image=$(ls trunk/images/*.trx)
             mv $image $(echo $image | sed 's/K2P/K2P-NANO/')
           fi
-                    
+          
+
+        
       - name: Release
         uses: softprops/action-gh-release@master
         with:
-          tag_name: $(date +%Y%m%d)
+          tag_name: ${{ env.TAG_NAME }}
           files: trunk/images/*.trx
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
