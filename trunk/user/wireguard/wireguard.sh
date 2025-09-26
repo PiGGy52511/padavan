@@ -1,28 +1,33 @@
 #!/bin/sh
 
 start_wg() {
-	localip="$(nvram get wireguard_localip)"
-	privatekey="$(nvram get wireguard_localkey)"
-	peerkey="$(nvram get wireguard_peerkey)"
-	peerip="$(nvram get wireguard_peerip)"
+	address="$(nvram get wireguard_address)"
+	privatekey="$(nvram get wireguard_privatekey)"
+	publickey="$(nvram get wireguard_publickey)"
+	endpoint="$(nvram get wireguard_endpoint)"
+	presharedkey="$(nvram get wireguard_presharedkey)"
+  	allowedips="$(nvram get wireguard_allowedips)"
+	persistentkeepalive ="$(nvram get wireguard_persistentkeepalive)"
+	postup="$(nvram get wireguard_postup)"
+	postdown="$(nvram get wireguard_postdown)"
 	logger -t "WIREGUARD" "正在启动wireguard"
-	ifconfig wg0 down
-	ip link del dev wg0
-	ip link add dev wg0 type wireguard
-	ip link set dev wg0 mtu 1420
-	ip addr add $localip dev wg0
-	echo "$privatekey" > /tmp/privatekey
-	wg set wg0 private-key /tmp/privatekey
-	wg set wg0 peer $peerkey persistent-keepalive 25 allowed-ips 0.0.0.0/0 endpoint $peerip
-	iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE
-	ifconfig wg0 up
+	cp -f /etc_ro/wg0.conf /tmp/wg0.conf
+ 	sed -i "s|WG_PRIVATEKEY|$privatekey|g" /tmp/wg0.conf
+ 	sed -i "s|WG_ADDRESS|$address|g" /tmp/wg0.conf
+   	sed -i "s|WG_PUBLICKEY|$publickey|g" /tmp/wg0.conf
+	sed -i "s|WG_ENDPOINT|$endpoint|g" /tmp/wg0.conf
+	sed -i "s|WG_PRESHAREDKEY|$presharedkey|g" /tmp/wg0.conf
+	sed -i "s|WG_ALLOWEDIPS|$allowedips|g" /tmp/wg0.conf
+	sed -i "s|WG_PERSISTENTKEEPALIVE|$persistentkeepalive|g" /tmp/wg0.conf
+	sed -i "s|WG_POSTUP|$postup|g" /tmp/wg0.conf
+	sed -i "s|WG_POSTDOWN|$postdown|g" /tmp/wg0.conf
+ 	wg-quick up /tmp/wg0.conf
 }
 
 
 stop_wg() {
-	ifconfig wg0 down
-	ip link del dev wg0
 	logger -t "WIREGUARD" "正在关闭wireguard"
+	wg-quick down /tmp/wg0.conf
 	}
 
 
