@@ -195,6 +195,20 @@ function done_validating(action){
 
 										</tr>
 										<tr>
+										<th>预共享密钥 </th>
+				<td>
+					<input type="text" class="input" name="wireguard_presharedkey" id="wireguard_presharedkey" style="width: 200px" value="<% nvram_get_x("","wireguard_presharedkey"); %>" />
+				</td>
+
+										</tr>
+										<tr>
+										<th>允许的IP</th>
+				<td>
+					<input type="text" class="input" name="wireguard_allowedips" id="wireguard_allowedips" style="width: 200px" value="<% nvram_get_x("","wireguard_allowedips"); %>" />
+				</td>
+
+										</tr>
+										<tr>
 										<th>持续Keep-Alive</th>
 				<td>
 					<input type="text" class="input" name="wireguard_persistentkeepalive" id="wireguard_persistentkeepalive" style="width: 200px" value="<% nvram_get_x("","wireguard_persistentkeepalive"); %>" />
