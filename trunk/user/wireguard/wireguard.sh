@@ -1,5 +1,4 @@
 #!/bin/sh
-http_username=`nvram get http_username`
 start_wg() {
 	address="$(nvram get wireguard_address)"
 	privatekey="$(nvram get wireguard_privatekey)"
@@ -22,9 +21,6 @@ start_wg() {
 	sed -i "s|WG_POSTUP|$postup|g" /tmp/wg0.conf
 	sed -i "s|WG_POSTDOWN|$postdown|g" /tmp/wg0.conf
  	wg-quick up /tmp/wg0.conf
-	sed -i '/reresolve-dns/d' /etc/storage/cron/crontabs/$http_username
-	cat >> /etc/storage/cron/crontabs/$http_username << EOF
-*/1 * * * * /bin/sh /usr/bin/reresolve-dns.sh C >/dev/null 2>&1
 }
 
 
