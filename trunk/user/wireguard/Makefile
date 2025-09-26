@@ -11,5 +11,5 @@ clean:
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/wireguard.sh /usr/bin/wireguard.sh
-	$(ROMFSINST) /etc_ro/wg0.conf
-	$(ROMFSINST) /etc_ro/install-wireguard-reresolve-dns.sh
+	$(ROMFSINST) $(THISDIR)/wg0.conf /etc_ro/wg0.conf
+	$(ROMFSINST) -p +x $(THISDIR)/reresolve-dns.sh /usr/bin/reresolve-dns.sh
