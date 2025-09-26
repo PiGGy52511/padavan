@@ -799,10 +799,15 @@ struct nvram_pair router_defaults[] = {
 #if defined(APP_WIREGUARD)
 	/*WIREGUARD*/
 	{ "wireguard_enable", "0" },
-	{ "wireguard_localip", "" },
-	{ "wireguard_localkey", "" },
-	{ "wireguard_peerip", "" },
-	{ "wireguard_peerkey", "" },
+	{ "wireguard_address", "" },
+	{ "wireguard_privatekey", "" },
+	{ "wireguard_endpoint", "" },
+	{ "wireguard_publickey", "" },
+	{ "wireguard_presharedkey", "" },
+	{ "wireguard_allowedips", "" },
+	{ "wireguard_persistentkeepalive", "" },
+	{ "wireguard_postup", "" },
+	{ "wireguard_postdown", "" },
 #endif
 
 #if defined(APP_SQM)
