@@ -165,32 +165,53 @@ function done_validating(action){
 										</tr>
 
 										<tr>
-										<th>本机密钥key </th>
+										<th>私钥 </th>
 				<td>
-					<input type="text" class="input" name="wireguard_localkey" id="wireguard_localkey" style="width: 200px" value="<% nvram_get_x("","wireguard_localkey"); %>" />
+					<input type="text" class="input" name="wireguard_privatekey" id="wireguard_privatekey" style="width: 200px" value="<% nvram_get_x("","wireguard_privatekey"); %>" />
 				</td>
 
 										</tr>
 
 										<tr>
-										<th>本机IP（格式 10.0.0.2/24）</th>
+										<th>本机IP（格式10.0.0.2/24）</th>
 				<td>
-					<input type="text" class="input" name="wireguard_localip" id="wireguard_localip" style="width: 200px" value="<% nvram_get_x("","wireguard_localip"); %>" />
+					<input type="text" class="input" name="wireguard_address" id="wireguard_address" style="width: 200px" value="<% nvram_get_x("","wireguard_address"); %>" />
 				</td>
 
 										</tr>
 									
 										<tr>
-										<th>对端密钥key </th>
+										<th>公钥 </th>
 				<td>
-					<input type="text" class="input" name="wireguard_peerkey" id="wireguard_peerkey" style="width: 200px" value="<% nvram_get_x("","wireguard_peerkey"); %>" />
+					<input type="text" class="input" name="wireguard_publickey" id="wireguard_publickey" style="width: 200px" value="<% nvram_get_x("","wireguard_publickey"); %>" />
 				</td>
 
 										</tr>
 										<tr>
-										<th>对端ip:端口（格式 223.5.6.6:4900)</th>
+										<th>对端地址:端口（格式example.com:4900)</th>
 				<td>
-					<input type="text" class="input" name="wireguard_peerip" id="wireguard_peerip" style="width: 200px" value="<% nvram_get_x("","wireguard_peerip"); %>" />
+					<input type="text" class="input" name="wireguard_endpoint" id="wireguard_endpoint" style="width: 200px" value="<% nvram_get_x("","wireguard_endpoint"); %>" />
+				</td>
+
+										</tr>
+										<tr>
+										<th>持续Keep-Alive</th>
+				<td>
+					<input type="text" class="input" name="wireguard_persistentkeepalive" id="wireguard_persistentkeepalive" style="width: 200px" value="<% nvram_get_x("","wireguard_persistentkeepalive"); %>" />
+				</td>
+
+										</tr>
+										<tr>
+										<th>PostUp</th>
+				<td>
+					<input type="text" class="input" name="wireguard_up" id="wireguard_up" style="width: 200px" value="<% nvram_get_x("","wireguard_up"); %>" />
+				</td>
+
+										</tr>
+										<tr>
+										<th>PostDown</th>
+				<td>
+					<input type="text" class="input" name="wireguard_postdown" id="wireguard_postdown" style="width: 200px" value="<% nvram_get_x("","wireguard_postdown"); %>" />
 				</td>
 
 										</tr>
