@@ -10,6 +10,7 @@ start_wg() {
 	postup="$(nvram get wireguard_postup)"
 	postdown="$(nvram get wireguard_postdown)"
 	logger -t "WIREGUARD" "正在启动wireguard"
+	cp -f /etc_ro/wg0.conf /etc/storage/wireguard/wg0.conf
  	sed -i "s|WG_PRIVATEKEY|$privatekey|g" /etc/storage/wireguard/wg0.conf
  	sed -i "s|WG_ADDRESS|$address|g" /etc/storage/wireguard/wg0.conf
    	sed -i "s|WG_PUBLICKEY|$publickey|g" /etc/storage/wireguard/wg0.conf
