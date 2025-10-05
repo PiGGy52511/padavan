@@ -10,23 +10,22 @@ start_wg() {
 	postup="$(nvram get wireguard_postup)"
 	postdown="$(nvram get wireguard_postdown)"
 	logger -t "WIREGUARD" "正在启动wireguard"
-	cp -f /etc_ro/wg0.conf /tmp/wg0.conf
- 	sed -i "s|WG_PRIVATEKEY|$privatekey|g" /tmp/wg0.conf
- 	sed -i "s|WG_ADDRESS|$address|g" /tmp/wg0.conf
-   	sed -i "s|WG_PUBLICKEY|$publickey|g" /tmp/wg0.conf
-	sed -i "s|WG_ENDPOINT|$endpoint|g" /tmp/wg0.conf
-	sed -i "s|WG_PRESHAREDKEY|$presharedkey|g" /tmp/wg0.conf
-	sed -i "s|WG_ALLOWEDIPS|$allowedips|g" /tmp/wg0.conf
-	sed -i "s|WG_PERSISTENTKEEPALIVE|$persistentkeepalive|g" /tmp/wg0.conf
-	sed -i "s|WG_POSTUP|$postup|g" /tmp/wg0.conf
-	sed -i "s|WG_POSTDOWN|$postdown|g" /tmp/wg0.conf
- 	wg-quick up /tmp/wg0.conf
+ 	sed -i "s|WG_PRIVATEKEY|$privatekey|g" /etc/storage/wireguard/wg0.conf
+ 	sed -i "s|WG_ADDRESS|$address|g" /etc/storage/wireguard/wg0.conf
+   	sed -i "s|WG_PUBLICKEY|$publickey|g" /etc/storage/wireguard/wg0.conf
+	sed -i "s|WG_ENDPOINT|$endpoint|g" /etc/storage/wireguard/wg0.conf
+	sed -i "s|WG_PRESHAREDKEY|$presharedkey|g" /etc/storage/wireguard/wg0.conf
+	sed -i "s|WG_ALLOWEDIPS|$allowedips|g" /etc/storage/wireguard/wg0.conf
+	sed -i "s|WG_PERSISTENTKEEPALIVE|$persistentkeepalive|g" /etc/storage/wireguard/wg0.conf
+	sed -i "s|WG_POSTUP|$postup|g" /etc/storage/wireguard/wg0.conf
+	sed -i "s|WG_POSTDOWN|$postdown|g" /etc/storage/wireguard/wg0.conf
+ 	wg-quick up wg0
 }
 
 
 stop_wg() {
 	logger -t "WIREGUARD" "正在关闭wireguard"
-	wg-quick down /tmp/wg0.conf
+	wg-quick down wg0
 	}
 
 
