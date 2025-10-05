@@ -218,7 +218,7 @@ function done_validating(action){
 										<tr>
 										<th>PostUp</th>
 				<td>
-					<input type="text" class="input" name="wireguard_postup" id="wireguard_up" style="width: 200px" value="<% nvram_get_x("","wireguard_up"); %>" />
+					<input type="text" class="input" name="wireguard_postup" id="wireguard_up" style="width: 200px" value="<% nvram_get_x("","wireguard_postup"); %>" />
 				</td>
 
 										</tr>
