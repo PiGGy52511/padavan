@@ -43,7 +43,7 @@ parse_options() {
   local BLOCK="global"
   CONFIG_FILE=$1
   local CONFIG_FILE_=$1
-  [ -e $CONFIG_FILE ] || CONFIG_FILE="/etc/storage/wireguard/$CONFIG_FILE.conf"
+  [ -e $CONFIG_FILE ] || CONFIG_FILE="/etc/storage/$CONFIG_FILE.conf"
   [ -e $CONFIG_FILE ] || die "'$CONFIG_FILE_' does not exist\n'$CONFIG_FILE' does not exist"
   INTERFACE=$(basename "$CONFIG_FILE_" | cut -d'.' -f1)
   [ $(echo $CONFIG_FILE | grep -o "^.\+\.conf$") ] || die "The config file must be a valid interface name, followed by .conf"
