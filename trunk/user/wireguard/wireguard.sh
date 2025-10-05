@@ -6,7 +6,7 @@ start_wg() {
 	endpoint="$(nvram get wireguard_endpoint)"
 	presharedkey="$(nvram get wireguard_presharedkey)"
   	allowedips="$(nvram get wireguard_allowedips)"
-	persistentkeepalive ="$(nvram get wireguard_persistentkeepalive)"
+	persistentkeepalive="$(nvram get wireguard_persistentkeepalive)"
 	postup="$(nvram get wireguard_postup)"
 	postdown="$(nvram get wireguard_postdown)"
 	logger -t "WIREGUARD" "正在启动wireguard"
