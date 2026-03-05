@@ -1015,11 +1015,7 @@
 #if defined(APP_WIREGUARD)
 	struct variable variables_WIREGUARD[] = {
 			{"wireguard_enable", "", NULL, EVM_RESTART_WIREGUARD},
-			{"wireguard_localip", "", NULL, EVM_RESTART_WIREGUARD},
-			{"wireguard_localkey", "", NULL, EVM_RESTART_WIREGUARD},
-			{"wireguard_peerkey", "", NULL, EVM_RESTART_WIREGUARD},
-			{"wireguard_peerip", "", NULL, EVM_RESTART_WIREGUARD},
-			{"wireguard_localip", "", NULL, EVM_RESTART_WIREGUARD},
+			{"scripts.wg0.conf", "File", NULL, EVM_RESTART_WIREGUARD},
 			{0,0,0,0}
 		};
 #endif
