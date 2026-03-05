@@ -164,35 +164,13 @@ function done_validating(action){
 
 										</tr>
 
-										<tr>
-										<th>本机密钥key </th>
-				<td>
-					<input type="text" class="input" name="wireguard_localkey" id="wireguard_localkey" style="width: 200px" value="<% nvram_get_x("","wireguard_localkey"); %>" />
-				</td>
-
-										</tr>
-
-										<tr>
-										<th>本机IP（格式 10.0.0.2/24）</th>
-				<td>
-					<input type="text" class="input" name="wireguard_localip" id="wireguard_localip" style="width: 200px" value="<% nvram_get_x("","wireguard_localip"); %>" />
-				</td>
-
-										</tr>
-									
-										<tr>
-										<th>对端密钥key </th>
-				<td>
-					<input type="text" class="input" name="wireguard_peerkey" id="wireguard_peerkey" style="width: 200px" value="<% nvram_get_x("","wireguard_peerkey"); %>" />
-				</td>
-
-										</tr>
-										<tr>
-										<th>对端ip:端口（格式 223.5.6.6:4900)</th>
-				<td>
-					<input type="text" class="input" name="wireguard_peerip" id="wireguard_peerip" style="width: 200px" value="<% nvram_get_x("","wireguard_peerip"); %>" />
-				</td>
-
+                                        <tr id="row_post_wan_script">
+											<td colspan="2">
+												<i class="icon-hand-right"></i> <a href="javascript:spoiler_toggle('script2')"><span>确保配置文件能被wg-quick正确读取</span></a>
+												<div id="script2">
+													<textarea rows="18" wrap="off" spellcheck="false" maxlength="314571" class="span12" name="scripts.wg0.conf" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("scripts.wg0.conf",""); %></textarea>
+												</div>
+											</td>
 										</tr>
 										<tr>
 											<td colspan="4" style="border-top: 0 none;">
