@@ -1,4 +1,10 @@
 #!/bin/sh
+
+if [ ! -f "/etc/storage/wg0.conf" ] ; then
+cp -rf /etc_ro/wg0.conf /etc/storage/
+chmod 755 "/etc/storage/wg0.conf"
+fi
+
 WG_INTERFACE='wg0'
 wgconf=/etc/storage/${WG_INTERFACE}.conf
 http_username=`nvram get http_username`
