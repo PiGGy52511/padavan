@@ -1,41 +1,51 @@
 #!/bin/sh
+WG_INTERFACE='wg0'
+wgconf=/etc/storage/${WG_INTERFACE}.conf
+http_username=`nvram get http_username`
+wireguard_enable=`nvram get wireguard_enable`
 
 start_wg() {
-	localip="$(nvram get wireguard_localip)"
-	privatekey="$(nvram get wireguard_localkey)"
-	peerkey="$(nvram get wireguard_peerkey)"
-	peerip="$(nvram get wireguard_peerip)"
-	logger -t "WIREGUARD" "正在启动wireguard"
-	ifconfig wg0 down
-	ip link del dev wg0
-	ip link add dev wg0 type wireguard
-	ip link set dev wg0 mtu 1420
-	ip addr add $localip dev wg0
-	echo "$privatekey" > /tmp/privatekey
-	wg set wg0 private-key /tmp/privatekey
-	wg set wg0 peer $peerkey persistent-keepalive 25 allowed-ips 0.0.0.0/0 endpoint $peerip
-	iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE
-	ifconfig wg0 up
+    logger -t "WIREGUARD" "正在启动wireguard"
+    /usr/bin/wg-quick up ${wgconf}
+    sed -i '/wireguard/d' /etc/storage/cron/crontabs/$http_username
+    cat >> /etc/storage/cron/crontabs/$http_username << EOF
+*/1 * * * * /bin/sh /usr/bin/wireguard.sh C >/dev/null 2>&1
+EOF
 }
 
 
 stop_wg() {
-	ifconfig wg0 down
-	ip link del dev wg0
-	logger -t "WIREGUARD" "正在关闭wireguard"
-	}
+    /usr/bin/wg-quick down ${wgconf}
+    sed -i '/wireguard/d' /etc/storage/cron/crontabs/$http_username
+    logger -t "WIREGUARD" "正在关闭wireguard"
+}
 
+check_wg() {
+    if [ "$wireguard_enable" = "1" ]; then
+        echo "WireGuard 已启动，检查 iptables 规则..."
+        iptables -C INPUT -i $WG_INTERFACE -j ACCEPT || iptables -A INPUT -i $WG_INTERFACE -j ACCEPT
+        iptables -C FORWARD -i $WG_INTERFACE -j ACCEPT || iptables -A FORWARD -i $WG_INTERFACE -j ACCEPT
+        iptables -t nat -C POSTROUTING -o $WG_INTERFACE -j MASQUERADE || iptables -t nat -A POSTROUTING -o $WG_INTERFACE -j MASQUERADE
 
+        echo "检查对端通信时效，针对ddns变化"
+        /bin/sh /usr/bin/reresolve-dns.sh ${wgconf}
+    else
+        echo "WireGuard 未启动，跳过设置 iptables 规则。"
+    fi
+}
 
 case $1 in
 start)
-	start_wg
-	;;
+    start_wg
+    ;;
 stop)
-	stop_wg
-	;;
+    stop_wg
+    ;;
+C)
+    check_wg
+    ;;
 *)
-	echo "check"
-	#exit 0
-	;;
+    echo "check"
+    #exit 0
+    ;;
 esac
