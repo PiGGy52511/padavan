@@ -3,7 +3,6 @@
 WG_INTERFACE='wg0'
 wgconf=/etc/storage/${WG_INTERFACE}.conf
 http_username=$(nvram get http_username)
-[ -z "$http_username" ] && http_username=admin
 
 start_wg() {
 	address="$(nvram get wireguard_address)"
@@ -29,7 +28,7 @@ start_wg() {
 	sed -i "s|WG_POSTUP|$postup|g" /etc/storage/wg0.conf
 	sed -i "s|WG_POSTDOWN|$postdown|g" /etc/storage/wg0.conf
 
-	wg-quick up wg0
+	wg-quick up ${wgconf}
 
 	# 启动成功后添加每分钟 DDNS 检查
 	mkdir -p /etc/storage/cron/crontabs
@@ -39,7 +38,7 @@ start_wg() {
 
 stop_wg() {
 	logger -t "WIREGUARD" "正在关闭wireguard"
-	wg-quick down wg0
+	wg-quick down ${wgconf}
 
 	# 关闭后移除 DDNS 检查
 	sed -i '/wireguard\.sh C/d' /etc/storage/cron/crontabs/$http_username
