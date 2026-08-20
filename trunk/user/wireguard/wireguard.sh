@@ -4,6 +4,19 @@ WG_INTERFACE='wg0'
 wgconf=/etc/storage/${WG_INTERFACE}.conf
 http_username=$(nvram get http_username)
 
+# 设置或删除配置行：
+# 值为空时删除对应占位符所在行，否则替换占位符
+set_line() {
+	placeholder="$1"
+	value="$2"
+
+	if [ -z "$value" ]; then
+		sed -i "/${placeholder}/d" /etc/storage/wg0.conf
+	else
+		sed -i "s|${placeholder}|${value}|g" /etc/storage/wg0.conf
+	fi
+}
+
 start_wg() {
 	address="$(nvram get wireguard_address)"
 	privatekey="$(nvram get wireguard_privatekey)"
@@ -18,15 +31,16 @@ start_wg() {
 	logger -t "WIREGUARD" "正在启动wireguard"
 
 	cp -f /etc_ro/wg0.conf /etc/storage/wg0.conf
-	sed -i "s|WG_PRIVATEKEY|$privatekey|g" /etc/storage/wg0.conf
-	sed -i "s|WG_ADDRESS|$address|g" /etc/storage/wg0.conf
-	sed -i "s|WG_PUBLICKEY|$publickey|g" /etc/storage/wg0.conf
-	sed -i "s|WG_ENDPOINT|$endpoint|g" /etc/storage/wg0.conf
-	sed -i "s|WG_PRESHAREDKEY|$presharedkey|g" /etc/storage/wg0.conf
-	sed -i "s|WG_ALLOWEDIPS|$allowedips|g" /etc/storage/wg0.conf
-	sed -i "s|WG_PERSISTENTKEEPALIVE|$persistentkeepalive|g" /etc/storage/wg0.conf
-	sed -i "s|WG_POSTUP|$postup|g" /etc/storage/wg0.conf
-	sed -i "s|WG_POSTDOWN|$postdown|g" /etc/storage/wg0.conf
+
+	set_line WG_PRIVATEKEY "$privatekey"
+	set_line WG_ADDRESS "$address"
+	set_line WG_PUBLICKEY "$publickey"
+	set_line WG_ENDPOINT "$endpoint"
+	set_line WG_PRESHAREDKEY "$presharedkey"
+	set_line WG_ALLOWEDIPS "$allowedips"
+	set_line WG_PERSISTENTKEEPALIVE "$persistentkeepalive"
+	set_line WG_POSTUP "$postup"
+	set_line WG_POSTDOWN "$postdown"
 
 	wg-quick up ${wgconf}
 
